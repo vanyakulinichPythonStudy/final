@@ -1,0 +1,26 @@
+<div class='{{type}}_project_wrapper hidden'>
+  <form method="post" class="project_form" action="{% url 'projects' %}">
+    {% csrf_token %}
+
+    {% if type == 'edit' %}
+      <input type='text' class='input' name="edit_project_name" value='{{project_name}}'/>
+      <input type='hidden' name="project_id" value='{{project_id}}'/>
+    {% endif %}
+    {% if type == 'add' %}
+      <input type='text' class='input' name="new_project_name"/>
+    {% endif %}
+    <div>
+      {% if type == 'edit' %}
+        <input type='submit' value="Edit" class='button is-info' name='edit_project'/>
+        <input type='submit' value="Delete" class="button is-danger" name='delete_project'/>
+        <input type="button" value='Cancel' class="button cancel_edit_projects"/>
+      {% endif %}
+
+      {% if type == 'add' %}
+        <input type='submit' value="Add" class='button is-info' name='add_project'/>
+        <input type="button" value='Cancel' class="button cancel_add_project"/>
+      {% endif %}
+
+    </div>
+  </form>
+</div>

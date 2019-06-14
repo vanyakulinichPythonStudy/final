@@ -1,8 +1,29 @@
-{% extends "base.html" %}
+
+{% extends "base.html" %} 
+{% load static %}
+{% block style_files %}
+  <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+{% endblock %}
 
 {% block body %}
-<div>
-SIGN UP PAGE
+<div class='card sign_wrapper'>
+
+  <div class='title'>
+      Sign up into ToDo App
+  </div>
+
+  <form action="/signup/" method="post" class='field'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Sign Up" class="button submit_wrapper"/>
+  </form>
+  
+  <span>
+    Already have an account?
+  </span>
+  
+  <a href="/signin" role='button' class='is-link'>Sign In</a>
+  
 </div>
 
 {% endblock %}

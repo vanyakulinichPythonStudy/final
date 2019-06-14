@@ -1,0 +1,12 @@
+{% for project in userData %}
+  <div class='project_link'>
+    <span>
+      <a href="{% url 'project' id=project.id %}" >{{project.name}}</a>
+    </span>
+    {% if project.tasks %}
+      <span class='project_tasks_number'>{{project.tasks|length}}</span>
+    {% endif %}
+    <div class='projects_edit_menu'></div>
+  </div>
+  {% include "includes/project_form.html" with project_id=project.id  project_name=project.name type='edit'%}
+{% endfor %}

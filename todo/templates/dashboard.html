@@ -1,8 +1,96 @@
 {% extends "base.html" %}
+{% load static %}
+{% block style_files %}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
 
 {% block body %}
-<div>
-DASHBOARD PAGE
-</div>
+  <div class="dashboard_wrapper">
+    <div class="navbar is-info dashboard_header_wrapper">
+      <div class="navbar-start">
+        <div class="navbar-item subtitle">
+          DASHBOARD
+        </div>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          {% if userData|length %}
+            <div class="archive_link">
+              <a href="{% url 'archive' %}">Archive</a>
+            </div>
+          {% endif %}
+          <div class="buttons">
+            <a class="button is-light" href="{% url 'signout' %}">
+              Sign Out
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class='dashboard_content_wrapper'>
+      <div class="columns">
+        <div class="column is-one-fifth projects">
+          {% if userData %}
+            <div class='project_filters'>
+              <div class='today_filter'>
+                <a href="{% url 'filters' filter='today' %}">
+                  Today
+                  {% if filter == 'today' %}
+                    <span class='project_tasks_number'>{{userData.tasks|length}}</span>
+                  {% endif %} 
+                  
+                </a>
+              </div>
+              <div class='week_filter'>
+                <a href="{% url 'filters' filter='week' %}">
+                  Next 7 days
+                  {% if filter == 'week' %}
+                    <span class='project_tasks_number'>{{userData.tasks|length}}</span>
+                  {% endif %} 
+                  </a>
+              </div>
+            </div>
+            <div class='is-6 projects_header'>
+              <a href="{% url 'filters' filter='week' %}">Projects</span>
+            </div>
+            <div class='projects_container'>
+              {% include "includes/projects_list.html" with userData=userData %}
+            </div>
+          {%else%}
+            <span>No projects</span>
+          {% endif %}
+          <div class="button add_project_button is-info">+Add project</div>
+          {% include 'includes/project_form.html' with type='add' %}
+
+        </div>
+        <div class="column card is-half tasks">
+          <div class="tasks_header">
+            {% if filter %}
+              {% if filter == 'today' %}Today{% endif %}
+              {% if filter == 'week' %}Next 7 Days{% endif %}
+            {%elif archive%} 
+              Archive
+            {%else%}
+              All tasks in {{userData.project_name}}
+            {% endif %}
+            <span class='project_tasks_number'>{{userData.tasks|length}}</span>
+          </div>
+            {% if userData.tasks %}
+              {% include "includes/tasks_list.html" with userData=userData%}
+            {% endif %}
+            {% if userData|length %}
+              {% if not archive  %}
+                <div class="button add_project is-info add_task_button">+Add task</div>
+              {% endif %}
+              {% include 'includes/task_form.html' with userData=userData type='add' %}
+            {% endif %} 
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,24 @@
+ <div class="tasks_container">
+  {% for task in userData.tasks|dictsort:"priority" %}
+    <div class='task_item'>
+      <div class='task_description'>
+        {% if task.priority == 3 %}
+          <span class="low priority"></span>
+        {% elif task.priority == 2 %}
+          <span class='medium priority'></span>
+        {%else%}
+          <span class='high priority'></span>
+        {% endif %}
+        <span>
+          <span>{{task.name}}</span> | 
+          <span>{{task.acomplish_date|date:"j D"}}</span>
+        </span>
+        
+        <span class="task_project_name">{{task.project_name}}</span>
+        <div class='tasks_edit_menu'></div>
+      </div>
+      {% include "includes/task_form.html" with userData=userData task=task type='edit'%}
+      <hr class="divider"/>
+    </div>
+  {% endfor %}
+</div>

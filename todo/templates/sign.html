@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block style_files %}
+  <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+{% endblock %}
+
+
+{% block body %}
+  <div class='card sign_wrapper'>
+    {% block form_content %}  
+    {% endblock %}  
+  </div>
+
+{% endblock %}

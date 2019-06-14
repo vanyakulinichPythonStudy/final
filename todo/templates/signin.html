@@ -1,8 +1,26 @@
-{% extends "base.html" %}
+{% extends "sign.html" %} 
 
-{% block body %}
-<div>
-SIGN IN PAGE
-</div>
+{% block form_content %}
+  
+  <div class='title'>
+    Sign in ToDo App
+  </div>
+  <form action="/signin/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Sign In" class="button submit_wrapper"/>
+  </form>
+
+    <div class='social_wrapper'>
+      <a href="{% url 'social:begin' 'google-oauth2' %}" class="button is-success">Login with Google</a>
+    </div>
+    <div class='social_wrapper'>
+      <a href="{% url 'social:begin' 'github' %}" class="button is-success">Login with GitHub</a>
+    </div>
+
+    <span>
+      Do not have an account?
+    </span>
+    <a href="/signup" role='button' class='is-link'>Sign Up</a> 
 
 {% endblock %}

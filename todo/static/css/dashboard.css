@@ -1,0 +1,243 @@
+.dashboard_wrapper {
+  height: auto;
+  min-height: 100vh;
+  background-color: rgba(204, 196, 196, 0.4);
+}
+
+.projects,
+.projects > * {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.projects {
+  padding-top: 20px;
+  justify-content: flex-start;
+}
+
+.project_filters {
+  margin: 10px 0;
+}
+
+.project_filters,
+.project_link {
+  cursor: pointer;
+  margin: 10px;
+  position: relative;
+}
+
+.today_filter,
+.week_filter,
+.tasks_header {
+  position: relative;
+}
+
+.tasks_header {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.projects_container {
+  width: 100%;
+}
+.tasks_edit_menu,
+.projects_edit_menu {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: grey;
+  position: absolute;
+  right: -4px;
+  top: 0px;
+  margin: 10px;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.tasks_edit_menu::before,
+.tasks_edit_menu::after,
+.projects_edit_menu::before,
+.projects_edit_menu::after {
+  content: "";
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: grey;
+  position: absolute;
+  left: 0;
+}
+.tasks_edit_menu::before,
+.projects_edit_menu::before {
+  top: 7px;
+}
+.tasks_edit_menu::after,
+.projects_edit_menu::after {
+  top: -7px;
+}
+
+.task_description:hover > .tasks_edit_menu,
+.project_link:hover > .projects_edit_menu {
+  visibility: visible;
+}
+
+.project_link,
+.add_project_wrapper,
+.edit_project_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tasks_container {
+  width: 100%;
+}
+
+.task_project_name {
+  font-weight: 600;
+  position: absolute;
+  right: 30px;
+}
+
+.add_task_wrapper,
+.edit_task_wrapper {
+  position: relative;
+}
+
+.add_task_wrapper > form,
+.edit_task_wrapper > form {
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.task_name {
+  max-width: 150px;
+}
+
+.priority_select {
+  max-width: 90px;
+}
+
+.task_date {
+  width: 180px;
+}
+.add_task_wrapper > form > .select {
+  max-width: 120px;
+}
+
+.add_task_wrapper > form > *,
+.edit_task_wrapper > form > * {
+  margin: 0 5px;
+}
+
+.project_filters > *,
+.projects_header {
+  font-weight: 600;
+}
+
+.projects_header {
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.add_project {
+  margin: 10px 0;
+}
+
+.project_tasks_number {
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: center;
+  opacity: 0.5;
+  position: absolute;
+  right: 45px;
+  top: 3px;
+  right: -23px;
+}
+
+.project_link > .project_tasks_number {
+  right: 29px;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+  min-height: 100vh;
+  min-width: 50vw;
+}
+
+.task_description,
+.task_item {
+  width: 100%;
+}
+
+.task_description {
+  display: flex;
+  position: relative;
+  padding-right: 25px;
+}
+
+.divider {
+  margin: 5px 0 15px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.add_project_wrapper,
+.add_project_button {
+  margin-top: 22px;
+  padding-left: 15px;
+}
+
+.project_form > div {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5px;
+}
+
+.priority {
+  height: 20px;
+  width: 20px;
+  border: 1px solid black;
+  margin-right: 30px;
+}
+
+.low {
+  background: lightgray;
+}
+
+.medium {
+  background: orange;
+}
+
+.high {
+  background: red;
+}
+
+.checkbox {
+  height: 20px;
+  width: 20px;
+}
+
+.checkbox_wrapper {
+  position: absolute;
+  right: 6px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.archive_link {
+  position: absolute;
+  left: -62px;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 800;
+}

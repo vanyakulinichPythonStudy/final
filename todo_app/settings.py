@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'todo'
 ]
 
@@ -63,6 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -119,3 +122,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'social_core.backends.github.GithubOAuth2',  # for Github authentication
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/signin/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = "/"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '48346003352-1gcg5sgnilr3pa2l9h5fnjopdm6l5bor.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'a_jeN-ARoKtwR6UCueoHHNve'
+
+SOCIAL_AUTH_GITHUB_KEY = '9ba7c59cbb707e3af907'
+SOCIAL_AUTH_GITHUB_SECRET = 'a8afab8f2d33d7173bfc89ba379d6dfec1204a4c'

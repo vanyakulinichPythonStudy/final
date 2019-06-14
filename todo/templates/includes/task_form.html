@@ -1,0 +1,63 @@
+<div class='{{type}}_task_wrapper hidden'>
+  <form method="post" action="{% url 'tasks' %}">
+    {% csrf_token %}
+    <input type='text' class='input task_name' name="task_name" value='{{task.name}}' required placeholder="Enter task name"/>
+    <input type='hidden' name="task_id" value='{{task.id}}'/>
+    <div class="select">
+      <select class='projects_select' name="project_id" required>
+        <option disabled>Choose project</option>
+        {% for project in userData %}
+          {% if task and task.project_name and task.project_name == project.name %}
+              <option value='{{project.id}}' selected>
+                {{project.name}}
+              </option>
+          {% else %}
+              <option value='{{project.id}}'>
+                {{project.name}}
+              </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="select" >
+      <select class='priority_select' name="priority" required>
+        <option disabled>Choose priority</option>
+        <option value='3'>Low</option>
+        <option value='2'>Medium</option>
+        <option value='1'>High</option>
+      </select>
+    </div>
+
+    <input 
+      type="date" 
+      name="task_date" class='input task_date'
+      value='{{task.acomplish_date|date:"Y-m-j"}}'
+      required
+    /> 
+
+    {% if type == 'edit' %}
+      <div class="checkbox_wrapper">
+        {% if task.is_done %}
+          <input type="checkbox" name="is_done" class='checkbox' checked/>
+        {% else %}
+          <input type="checkbox" name="is_done" class='checkbox'/>
+        {% endif %}
+        <label>
+          Done
+        </label>
+      </div>
+      
+    {% endif %}
+
+    {% if type == 'edit' %}
+      <input type='submit' value="Edit" class='button is-info' name="edit_task"/>
+      <input type='submit' value="Delete" class='button is-danger' name="delete_task"/>
+      <input type="button" value='Cancel' class="button cancel_edit_tasks"/>
+    {% endif %}
+    {% if type == 'add' %}
+      <input type='submit' value="Add" class='button is-info' name="add_task"/>
+      <input type="button" value='Cancel' class="button cancel_add_task"/>
+    {% endif %}
+
+  </form>
+</div>
