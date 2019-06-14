@@ -64,7 +64,11 @@ def projects(request):
         project = Project.objects.filter(id=form.get('project_id'))
         project.update(name=form.get('edit_project_name'))
     if 'delete_project' in form:
-        Project.objects.filter(id=form.get('project_id')).delete()
+        project = Project.objects.filter(id=form.get('project_id'))[0]
+        unfinished_tasks = project.task_set.filter(is_done=False).count()
+        if unfinished_tasks > 0:
+            return redirect('project', id=form.get('project_id'))
+        project.delete()
     return redirect('/dashboard/')
 
 

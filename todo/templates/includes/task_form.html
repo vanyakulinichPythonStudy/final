@@ -27,11 +27,12 @@
         <option value='1'>High</option>
       </select>
     </div>
-
+    
     <input 
       type="date" 
       name="task_date" class='input task_date'
       value='{{task.acomplish_date|date:"Y-m-j"}}'
+      min='{%now "Y-m-j"%}'
       required
     /> 
 
