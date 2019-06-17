@@ -41,3 +41,21 @@ class SignUpForm(RegisterForm):
         except:
             return username
         raise forms.ValidationError('User not found. Try again or sign up')
+
+
+# class ProjectForm(forms.Form):
+#     def __init__(self, data, *args, **kwargs):
+#         super(ProjectForm, self).__init__(*args, **kwargs)
+#         print('ARGS', data, args, kwargs)
+#         if 'edit_project' in data:
+#             self.fields['edit_project_name'] = forms.CharField(
+#                 max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'input'}))
+#             self.fields['edit_project_name'].initial = project_name
+#             self.fields['project_id'] = forms.CharField(
+#                 max_length=0, widget=forms.HiddenInput())
+#             self.fields['project_id'].initial = project_id
+
+#         if 'add_project' in data:
+#             self.fields['new_project_name'] = forms.CharField(
+#                 max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'input'}))
+#             self.fields['new_project_name'].initial = data['new_project_name']

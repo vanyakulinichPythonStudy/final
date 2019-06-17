@@ -55,15 +55,26 @@ def signup(request):
 @require_POST
 def projects(request):
     form = request.POST
+
     if 'add_project' in form:
+        if not validateProjectName(request, form):
+            return redirect(request.META['HTTP_REFERER'])
         Project.objects.create(
             name=form.get('new_project_name'),
             user=request.user
         )
     if 'edit_project' in form:
+
+        if not _validateProjectName(form) or not _validateProjectId(request, form):
+            return redirect(request.META['HTTP_REFERER'])
+
         project = Project.objects.filter(id=form.get('project_id'))
         project.update(name=form.get('edit_project_name'))
+
     if 'delete_project' in form:
+        if not validateProjectId(form):
+            return redirect('filters', filter='today')
+
         project = Project.objects.filter(id=form.get('project_id'))[0]
         unfinished_tasks = project.task_set.filter(is_done=False).count()
         if unfinished_tasks > 0:
@@ -75,6 +86,10 @@ def projects(request):
 @require_POST
 def tasks(request):
     form = request.POST
+
+    if not _validateTask(request, form):
+        return redirect(request.META['HTTP_REFERER'])
+
     if 'add_task' in form:
         Task.objects.create(
             name=form.get('task_name'),
@@ -97,6 +112,8 @@ def tasks(request):
     if 'delete_task' in form:
         Task.objects.filter(id=form.get('task_id')).delete()
 
+    if 'archive' in request.META['HTTP_REFERER']:
+        return redirect('archive')
     return redirect('filters', filter='week')
 
 
@@ -118,6 +135,7 @@ def archive(request):
     for item in userData:
         item.tasks = item.task_set.filter(is_done=True)
         userData = flattenTasks(item, userData)
+
     return render(request, 'dashboard.html', {'userData': userData, 'archive': True})
 
 
@@ -144,5 +162,31 @@ def filters(request, filter):
                     is_done=False
                 )
             userData = flattenTasks(item, userData)
-
     return render(request, 'dashboard.html', {'userData': userData, 'filter': filter})
+
+
+def _validateProjectId(request, form):
+    return len(Project.objects.filter(user=request.user, id=form.get('project_id')))
+
+
+def _validateProjectName(form):
+    if 'add_project' in form:
+        attr_name = 'new_project_name'
+    if 'edit_project' in form:
+        attr_name = 'edit_project_name'
+    return len(form.get(attr_name))
+
+
+def _validateTask(request, form):
+    if datetime.datetime.strptime(form.get('task_date'), "%Y-%m-%d") < datetime.datetime.combine(
+            datetime.date.today(), datetime.time.min):
+        return False
+    if 'add_task' in form and not _validateProjectId(request, form):
+        return False
+    if not len(form.get('task_name')):
+        return False
+    if int(form.get('priority')) not in (1, 2, 3):
+        return False
+    if 'delete_task' in form and not len(Task.objects.filter(id=form.get('task_id'))):
+        return False
+    return True
